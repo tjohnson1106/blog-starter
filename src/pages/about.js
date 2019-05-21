@@ -1,9 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 
-export const About = (props) => {
-  return (
-    <div>
-      <h2>About Page</h2>
-    </div>
-  );
-};
+export class About extends Component {
+  state = {
+    pageTitle: "About page"
+  };
+  render() {
+    return (
+      <div>
+        <h2>{this.state.pageTitle}</h2>
+      </div>
+    );
+  }
+}

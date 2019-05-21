@@ -11,7 +11,7 @@ export function Navbar() {
           </Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <Link to="/home">Home</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/about">About</Link>
