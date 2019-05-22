@@ -6,6 +6,7 @@ import { PostForm } from "../components/PostForm";
 export const Home = () => {
   // empty array -> changes value of post
   const [posts, setPosts] = useState([]);
+  const [limit, setLimit] = useState(5);
 
   useEffect(() => {
     axios
@@ -33,11 +34,33 @@ export const Home = () => {
     setPosts(postsUpdated);
   }
 
+  function getNumberOfPosts() {
+    axios
+      .get(`/posts/${limit}`)
+      .then((res) => setPosts(res.data))
+      .catch((err) => console.error(err));
+  }
+
   return (
     <div>
       <div className="row">
         <div className="col s6">
           <PostForm addPost={addPost} />
+        </div>
+        <div className="col s3 push-in">
+          <p>Limit number of posts</p>
+          <input
+            type="number"
+            value={limit}
+            onChange={(event) => setLimit(event.target.value)}
+          />
+
+          <button
+            onClick={getNumberOfPosts}
+            className="waves-effect waves-light btn"
+          >
+            Set
+          </button>
         </div>
       </div>
       <div className="row">

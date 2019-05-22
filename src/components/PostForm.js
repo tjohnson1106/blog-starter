@@ -15,7 +15,7 @@ export function PostForm(props) {
     });
   };
 
-  _onSubmit = (event) => {
+  const _onSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
 
@@ -47,7 +47,7 @@ export function PostForm(props) {
             <label htmlFor="body">Body</label>
             <input
               type="text"
-              name="title"
+              name="body"
               value={post.body}
               onChange={_onChange}
               className="validate"
