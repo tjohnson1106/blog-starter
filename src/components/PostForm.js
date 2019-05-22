@@ -1,22 +1,59 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 export function PostForm() {
   const [loading, setLoading] = useState(false);
+  const [post, setPost] = useState({
+    title: "",
+    body: ""
+  });
+
+  const _onChange = (event) => {
+    setPost({
+      ...post,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  _onSubmit = (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    axios
+      .post("/post", post)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <>
       {!loading ? (
-        <form className="push-in">
+        <form className="push-in" onSubmit={_onSubmit}>
           <div className="input-field">
-            <label htmlFor="">Title</label>
+            <label htmlFor="title">Title</label>
             <input
               type="text"
               name="title"
-              value
-              onChange={onChange}
-              className="vaidate"
+              value={post.title}
+              onChange={_onChange}
+              className="validate"
             />
           </div>
+          <div className="input-field">
+            <label htmlFor="body">Body</label>
+            <input
+              type="text"
+              name="title"
+              value={post.body}
+              onChange={_onChange}
+              className="validate"
+            />
+          </div>
+          <button type="submit" className="waves-effect waves-light btn">
+            Add
+          </button>
         </form>
       ) : (
         <div className="progress">
