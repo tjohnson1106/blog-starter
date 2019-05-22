@@ -7,6 +7,11 @@ export const Home = () => {
   // empty array -> changes value of post
   const [posts, setPosts] = useState([]);
   const [limit, setLimit] = useState(5);
+  const [editingPost, setEditingPost] = useState({
+    title: "",
+    body: "",
+    id: null
+  });
 
   useEffect(() => {
     axios
@@ -19,7 +24,7 @@ export const Home = () => {
   }, []);
 
   function editPost(post) {
-    console.log(post);
+    setEditingPost(post);
   }
 
   function deletePost(id) {
@@ -30,8 +35,15 @@ export const Home = () => {
   }
 
   function addPost(post) {
-    const postsUpdated = [post, ...posts];
-    setPosts(postsUpdated);
+    if (posts.find((p) => p.id === post.id)) {
+      const index = posts.findIndex((p) => p.id === post.id);
+      const postsUpdated = [...posts];
+      postsUpdated.splice(index, 1, post);
+      setPosts(postsUpdated);
+    } else {
+      const postsUpdated = [post, ...posts];
+      setPosts(postsUpdated);
+    }
   }
 
   function getNumberOfPosts() {
@@ -45,7 +57,7 @@ export const Home = () => {
     <div>
       <div className="row">
         <div className="col s6">
-          <PostForm addPost={addPost} />
+          <PostForm addPost={addPost} editingPost={editingPost} />
         </div>
         <div className="col s3 push-in">
           <p>Limit number of posts</p>
